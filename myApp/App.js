@@ -53,20 +53,84 @@ const styles = StyleSheet.create({
 */
 
 import React, {Component} from 'react';
-import {AppRegistry, Text, View} from 'react-native';
+import {AppRegistry, StyleSheet, Text, View, Image} from 'react-native';
 
 import Component1 from './app/components/Component1/Component1'
 
+const styles = StyleSheet.create({
+  bigBlue: {
+    color: 'blue', 
+    fontWeight: 'bold', 
+    fontSize: 30, 
+  }, 
+  red: {
+    color:'red', 
+  }, 
+  firstBox: {
+    flex: 1,
+    width:50, 
+  height: 50,
+    backgroundColor: 'powderblue'
+  }, 
+  secondBox: {
+    flex: 1,
+    width:50, 
+    height: 50,
+    backgroundColor: 'skyblue'
+  }, 
+  thirdBox: {
+    flex: 1,
+    width:50, 
+    height: 50,
+    backgroundColor: 'red'
+  }, 
+});
 export default class myApp extends Component{
   render()
   {
+    var pic = {
+      uri: 'https://www.pexels.com/photo/scenic-view-of-beach-248797/'
+    };
     return (
-      <View>
-    
-        <Component1 message="uhh what" />
-       
+      
+      <View style={{alignItems: 'center', flex: 1, flexDirection: 'column'}}>
+        <Image source={pic} style={{width: 190, height: 110}}/>
+        <Blink  text='I love to blinlk'/>
+        <Blink  text = 'Blinking is great' />
+        <Text style={styles.red}>Hello</Text>
+        <Text style={styles.bigBlue}>Hello agin</Text>
+        <Text style={[styles.red, styles.bigBlue]}>Combining the two..</Text>
+        <Text style={[styles.bigBlue, styles.red]}>Order matters apparently</Text>
+        <View style={styles.firstBox}></View>
+        <View style={styles.secondBox}></View>
+        <View style={styles.thirdBox}></View>
       </View>
     );
+  }
+}
+
+class Blink extends Component
+{
+  constructor(props)
+  {
+    super(props);
+    this.state = {isShowingText: true};
+
+    setInterval(() => (
+      this.setState(previousState => (
+        {isShowingText: !previousState.isShowingText}
+      ))
+    ), 1000);
+  }
+  render()
+  {
+    if(!this.state.isShowingText)
+    {
+      return null;
+    }
+    return (
+      <Text>{this.props.text}</Text>
+    )
   }
 }
 
